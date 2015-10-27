@@ -1,5 +1,4 @@
 import {ValidationLocale} from './validation-locale';
-import {TWBootstrapViewStrategy} from './strategies/twbootstrap-view-strategy';
 
 export class ValidationConfigDefaults {
 
@@ -10,7 +9,6 @@ ValidationConfigDefaults._defaults = {
   dependencies: [],
   locale: 'en-US',
   localeResources: 'aurelia-validation/resources/',
-  viewStrategy: TWBootstrapViewStrategy.AppendToMessage,
   allPropertiesAreMandatory: false
 };
 ValidationConfigDefaults.defaults = function() {
@@ -58,11 +56,7 @@ export class ValidationConfig {
     return this.getValue('dependencies');
   }
   computedFrom(dependencies) {
-    let deps = dependencies;
-    if (typeof(dependencies) === 'string') {
-      deps = [];
-      deps.push(dependencies);
-    }
+    let deps = Array.isArray(dependencies) ? dependencies : [dependencies];
     return this.setValue('dependencies', deps);
   }
   useLocale(localeIdentifier) {
@@ -75,12 +69,6 @@ export class ValidationConfig {
   }
   locale() {
     return ValidationLocale.Repository.load(this.getValue('locale'), this.getValue('localeResources'));
-  }
-  useViewStrategy(viewStrategy) {
-    return this.setValue('viewStrategy', viewStrategy);
-  }
-  getViewStrategy() {
-    return this.getValue('viewStrategy');
   }
   treatAllPropertiesAsMandatory() {
     this.setValue('allPropertiesAreMandatory', true);

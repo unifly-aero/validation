@@ -1,14 +1,11 @@
 import {ValidationConfig} from '../src/validation-config';
-import {TWBootstrapViewStrategy} from '../src/strategies/twbootstrap-view-strategy';
 
 describe('ValidationConfig', () => {
   it('should have default values', () => {
     var config = new ValidationConfig();
-    //all defaults should go here
     expect(config.getDebounceTimeout()).toBe(0);
     expect(config.getDependencies().length).toBe(0);
     expect(config.getValue('locale')).toBe('en-US');
-    expect(config.getViewStrategy()).toBe(TWBootstrapViewStrategy.AppendToMessage);
     expect(config.getValue('allPropertiesAreMandatory')).toBe(false);
   });
 
@@ -28,10 +25,6 @@ describe('ValidationConfig', () => {
     config = new ValidationConfig();
     expect(config.useLocale('nl-BE')).toBe(config); //fluent API check
     expect(config.getValue('locale')).toBe('nl-BE');
-
-    config = new ValidationConfig();
-    expect(config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput)).toBe(config);// fluent API check
-    expect(config.getViewStrategy()).toBe(TWBootstrapViewStrategy.AppendToInput);
 
     config = new ValidationConfig();
     expect(config.treatAllPropertiesAsMandatory()).toBe(config); // fluent API check
